@@ -1,15 +1,42 @@
-# Local .terraform directories
-**/.terraform/*
-
-# .tfstate files
-*.tfstate
-*.tfstate.*
-
-# Crash log files
-crash.log
-
-# Ignore any .tfvars that might contain secrets (opcional)
-# *.tfvars
+# ==============================================================================
 
 # Examples
 terraform-up-and-running-code/
+
+# 1. Terragrunt Cache (CRITICAL)
+# Terragrunt creates this hidden folder to store copies of your code, 
+# injected files, and provider binaries. Never commit this.
+.terragrunt-cache/
+
+# 2. Terraform Working Directory
+# Local cache for providers and modules managed by the terraform binary.
+.terraform/
+
+# 3. State Files
+# Even though we use S3, sometimes local state files or backups are created 
+# during migrations or testing. These should remain local.
+*.tfstate
+*.tfstate.*
+
+# 4. Crash Logs & Debugging
+# In case of execution errors, these files might contain sensitive environment info.
+*.log
+.terragrunt-debug-*
+crash.log
+
+# 5. Dependency Lock File
+# Optional: Some teams commit this for consistency, but during learning, 
+# it's often ignored to avoid OS-specific conflicts (Linux vs Windows/Mac).
+.terraform.lock.hcl
+
+# 6. Generated Files
+# Since we use the 'generate' block in Terragrunt, these files are 
+# ephemeral and should not be tracked by Git.
+backend.tf
+provider.tf
+
+# 7. Sensitive Variables (Secrets)
+# Files containing private keys, passwords, or personal AWS credentials.
+*.tfvars
+*.tfvars.json
+.env
